@@ -6,6 +6,8 @@ import moment from "moment";
 class Employee extends Component {
   state = {
     employees: [],
+    results:[],
+    search:""
   };
 
   // When the component mounts, load the next dog to be displayed
@@ -28,7 +30,7 @@ class Employee extends Component {
         }
 
         this.setState({
-          employees: list,
+          employees: list, results:list
         });
       })
       .catch((err) => {
@@ -36,13 +38,45 @@ class Employee extends Component {
       });
   }
 
+  handleInputChange = event => {
+    
+    const listEmployees = this.state.employees;
+    const listEmp = listEmployees.filter((employee) => {
+        let phone =  employee.phone.replace(/\(|\)|\-/gi, "");
+        let phone2 =  employee.phone.replace(/\(|\)/gi, "");
+        if((phone.startsWith(event.target.value))|| employee.phone.startsWith(event.target.value)||phone2.startsWith(event.target.value)||event.target.value.trim() === "")
+        return employee;
+    });
+    console.log(listEmp);
+    this.setState({ search: event.target.value, results: listEmp });
+  };
+
   render() {
     return (
       <div>
-       
         {/* <Table  employees={this.state.employees} /> */}
         <div className="container">
-        <h1>Employee Directory</h1>
+          <h1>Employee Directory</h1>
+
+          <div className="row">
+          <div className="col-sm-4"/>
+            <div className="col-sm-4">
+              <form>
+                <div className="form-group">
+                  <input
+                    type="search"
+                    className="form-control"
+                    id="search"
+                    placeholder="Search"
+                    name="search"
+                    value={this.search}
+                    onChange ={this.handleInputChange}
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+
           <div className="row">
             <div className="col-sm-12 ">
               <div className="table-responsive">
@@ -57,7 +91,7 @@ class Employee extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.employees.map((employee) => (
+                    {this.state.results.map((employee) => (
                       <tr key={employee.id}>
                         <td>
                           <img src={employee.image} />
