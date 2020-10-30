@@ -1,0 +1,2 @@
+(this["webpackJsonpemployee-dirtory-app"]=this["webpackJsonpemployee-dirtory-app"]||[]).push([[0],{10:function(e,t,n){},11:function(e,t,n){"use strict";n.r(t);var r=n(0),c=(n(2),n(3)),o=n.n(c);n(9),n(10);var p=function(){return Object(r.jsx)("div",{className:"App",children:Object(r.jsx)("h1",{children:"Employee Directory"})})};o.a.render(Object(r.jsx)(p,{}),document.getElementById("root"))},9:function(e,t,n){}},[[11,1,2]]]);
+//# sourceMappingURL=main.9c75097d.chunk.js.map
