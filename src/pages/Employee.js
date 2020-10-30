@@ -3,13 +3,14 @@ import axios from "axios";
 import Table from "../components/Table/Table";
 import moment from "moment";
 import "./Employee.css";
+import Search from "../components/Search/Search"
 
 class Employee extends Component {
   state = {
     employees: [],
-    results:[],
-    search:"",
-    sortOrder:"asc"
+    results: [],
+    search: "",
+    sortOrder: "asc",
   };
 
   // When the component mounts, load the next dog to be displayed
@@ -33,7 +34,8 @@ class Employee extends Component {
         }
 
         this.setState({
-          employees: list, results:list
+          employees: list,
+          results: list,
         });
       })
       .catch((err) => {
@@ -41,44 +43,49 @@ class Employee extends Component {
       });
   }
 
-  handleInputChange = event => {
-    
+  handleInputChange = (event) => {
     const listEmployees = this.state.employees;
     const listEmp = listEmployees.filter((employee) => {
-        let phone =  employee.phone.replace(/\(|\)|\-/gi, "");
-        let phone2 =  employee.phone.replace(/\(|\)/gi, "");
-        if((phone.startsWith(event.target.value))|| employee.phone.startsWith(event.target.value)||phone2.startsWith(event.target.value)||event.target.value.trim() === "")
+      let phone = employee.phone.replace(/\(|\)|\-/gi, "");
+      let phone2 = employee.phone.replace(/\(|\)/gi, "");
+      if (
+        phone.startsWith(event.target.value) ||
+        employee.phone.startsWith(event.target.value) ||
+        phone2.startsWith(event.target.value) ||
+        event.target.value.trim() === ""
+      )
         return employee;
     });
     console.log(listEmp);
     this.setState({ search: event.target.value, results: listEmp });
   };
 
-  handleNameClick = event =>{
-      console.log("Name clicked");
-      const array= this.state.results;
-      array.sort(function(a, b) {
-        var nameA = a.firstName.toUpperCase(); // ignore upper and lowercase
-        var nameB = b.firstName.toUpperCase(); // ignore upper and lowercase
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-      
-        // names must be equal
-        return 0;
-      });
-
-      let sortedArray = array;
-      if(this.state.sortOrder === "dsc")
-      {
-          sortedArray = array.reverse();
+  handleNameClick = (event) => {
+    console.log("Name clicked");
+    const array = this.state.results;
+    array.sort(function (a, b) {
+      var nameA = a.firstName.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.firstName.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
       }
 
-      
-      this.setState({ results: array, sortOrder: this.state.sortOrder === "asc" ? "dsc" : "asc" });
+      // names must be equal
+      return 0;
+    });
+
+    let sortedArray = array;
+    if (this.state.sortOrder === "dsc") {
+      sortedArray = array.reverse();
+    }
+
+    this.setState({
+      results: array,
+      sortOrder: this.state.sortOrder === "asc" ? "dsc" : "asc",
+    });
   };
 
   render() {
@@ -88,24 +95,7 @@ class Employee extends Component {
         <div className="container">
           <h1>Employee Directory</h1>
 
-          <div className="row">
-          <div className="col-sm-4"/>
-            <div className="col-sm-4">
-              <form>
-                <div className="form-group">
-                  <input
-                    type="search"
-                    className="form-control"
-                    id="search"
-                    placeholder="Search"
-                    name="search"
-                    value={this.search}
-                    onChange ={this.handleInputChange}
-                  />
-                </div>
-              </form>
-            </div>
-          </div>
+          <Search value={this.search} handleInputChange={this.handleInputChange}/>
 
           <div className="row">
             <div className="col-sm-12 ">
