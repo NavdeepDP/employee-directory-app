@@ -1,5 +1,21 @@
+
 table thead:hover{cursor:pointer;} /* For all tables*/
 
-h1{
-    color: blue;
+#header{
+    background-color: darkblue;
+    padding: 10px;
+    margin-bottom: 10px;
 }
+
+h1,h7 {
+    color: white;    
+}
+
+#email{
+    color:blue;
+}
+
+#email:hover{
+    text-decoration: underline;
+}
+

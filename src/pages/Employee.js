@@ -3,7 +3,7 @@ import axios from "axios";
 import Table from "../components/Table/Table";
 import moment from "moment";
 import "./Employee.css";
-import Search from "../components/Search/Search"
+import Search from "../components/Search/Search";
 
 class Employee extends Component {
   state = {
@@ -46,7 +46,7 @@ class Employee extends Component {
   handleInputChange = (event) => {
     const listEmployees = this.state.employees;
     const listEmp = listEmployees.filter((employee) => {
-      let phone = employee.phone.replace(/\(|\)|\-/gi, "");
+      let phone = employee.phone.replace(/\(|\)|-/gi, "");
       let phone2 = employee.phone.replace(/\(|\)/gi, "");
       if (
         phone.startsWith(event.target.value) ||
@@ -54,7 +54,10 @@ class Employee extends Component {
         phone2.startsWith(event.target.value) ||
         event.target.value.trim() === ""
       )
-        return employee;
+      {
+        return true;
+      }
+      return false;
     });
     console.log(listEmp);
     this.setState({ search: event.target.value, results: listEmp });
@@ -83,7 +86,7 @@ class Employee extends Component {
     }
 
     this.setState({
-      results: array,
+      results: sortedArray,
       sortOrder: this.state.sortOrder === "asc" ? "dsc" : "asc",
     });
   };
@@ -91,42 +94,28 @@ class Employee extends Component {
   render() {
     return (
       <div>
-        {/* <Table  employees={this.state.employees} /> */}
         <div className="container">
-          <h1>Employee Directory</h1>
-
-          <Search value={this.search} handleInputChange={this.handleInputChange}/>
-
-          <div className="row">
-            <div className="col-sm-12 ">
-              <div className="table-responsive">
-                <table className="table table-striped table-hover">
-                  <thead>
-                    <tr>
-                      <th>Image</th>
-                      <th onClick={this.handleNameClick}>Name</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>DOB</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.results.map((employee) => (
-                      <tr key={employee.id}>
-                        <td>
-                          <img src={employee.image} />
-                        </td>
-                        <td>{employee.name}</td>
-                        <td>{employee.phone}</td>
-                        <td>{employee.email}</td>
-                        <td>{employee.dob}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          <div id="header">
+            <div className="row">
+              <div className="col-sm-12">
+                <h1>Employee Directory</h1>
+                <h7>
+                  Click "Name" heading to sort alphabetically or enter phone
+                  number to search
+                </h7>
               </div>
             </div>
           </div>
+
+          <Search
+            value={this.search}
+            handleInputChange={this.handleInputChange}
+          />
+
+          <Table
+            employees={this.state.results}
+            handleNameClick={this.handleNameClick}
+          />
         </div>
       </div>
     );

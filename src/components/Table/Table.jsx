@@ -3,37 +3,32 @@ import "./Table.css";
 
 const Table = (props) => {
   return (
-    <div className="container">
+      
       <div className="row">
-        <div className="col-sm-12">
-          <table className="table">
+      <div className="col-sm-12 ">
+        <div className="table-responsive">
+          <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th>Image</th>
-                <th>Name</th>
+                <th onClick={props.handleNameClick}>Name</th>
                 <th>Phone</th>
                 <th>Email</th>
                 <th>DOB</th>
               </tr>
             </thead>
             <tbody>
-                {props.employees}
-              {/* {props.employees.map((employee, index) => (
+              {props.employees.map((employee) => (
                 <tr key={employee.id}>
-                  <td>{employee.image}</td>
+                  <td>
+                    <img src={employee.image} alt="{employee-id}" />
+                  </td>
                   <td>{employee.name}</td>
                   <td>{employee.phone}</td>
-                  <td>{employee.email}</td>
+                  <td id="email">{employee.email}</td>
                   <td>{employee.dob}</td>
                 </tr>
-              ))}               */}
-                  {/* <tr key={props.employees[0].id}>
-                  <td>{props.employees[0].image}</td>
-                  <td>{props.employees[0].name}</td>
-                  <td>{props.employees[0].phone}</td>
-                  <td>{props.employees[0].email}</td>
-                  <td>{props.employees[0].dob}</td>
-                </tr> */}
+              ))}
             </tbody>
           </table>
         </div>

@@ -1,8 +1,9 @@
 import React from "react";
+import "./Search.css"
 
 const Search = (props) => {
   return (
-    <div>
+    <div id="searchDiv">
       <div className="row">
         <div className="col-sm-4"></div>
         <div className="col-sm-4">
