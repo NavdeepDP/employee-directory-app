@@ -1,0 +1,5 @@
+table thead:hover{cursor:pointer;} /* For all tables*/
+
+h1{
+    color: blue;
+}

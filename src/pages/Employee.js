@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import axios from "axios";
 import Table from "../components/Table/Table";
 import moment from "moment";
+import "./Employee.css";
 
 class Employee extends Component {
   state = {
     employees: [],
     results:[],
-    search:""
+    search:"",
+    sortOrder:"asc"
   };
 
   // When the component mounts, load the next dog to be displayed
@@ -21,6 +23,7 @@ class Employee extends Component {
         for (let i = 0; i < employees.length; i++) {
           list.push({
             id: i,
+            firstName: employees[i].name.first,
             name: employees[i].name.first + " " + employees[i].name.last,
             phone: employees[i].cell,
             email: employees[i].email,
@@ -49,6 +52,33 @@ class Employee extends Component {
     });
     console.log(listEmp);
     this.setState({ search: event.target.value, results: listEmp });
+  };
+
+  handleNameClick = event =>{
+      console.log("Name clicked");
+      const array= this.state.results;
+      array.sort(function(a, b) {
+        var nameA = a.firstName.toUpperCase(); // ignore upper and lowercase
+        var nameB = b.firstName.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+      
+        // names must be equal
+        return 0;
+      });
+
+      let sortedArray = array;
+      if(this.state.sortOrder === "dsc")
+      {
+          sortedArray = array.reverse();
+      }
+
+      
+      this.setState({ results: array, sortOrder: this.state.sortOrder === "asc" ? "dsc" : "asc" });
   };
 
   render() {
@@ -84,7 +114,7 @@ class Employee extends Component {
                   <thead>
                     <tr>
                       <th>Image</th>
-                      <th>Name</th>
+                      <th onClick={this.handleNameClick}>Name</th>
                       <th>Phone</th>
                       <th>Email</th>
                       <th>DOB</th>
